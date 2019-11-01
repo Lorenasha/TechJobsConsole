@@ -63,12 +63,28 @@ namespace TechJobsConsole
                     // Fetch results
                     if (columnChoice.Equals("all"))
                     {
-                        Console.WriteLine("Search all fields not yet implemented.");
+                        //Console.WriteLine("Search all fields not yet implemented.");
+                        searchResults = JobData.FindByValue(searchTerm);
+                        if (searchResults.Count == 0)
+                        {
+                            Console.WriteLine("Not found any data that match with: " + searchTerm);
+                        }
+                        else
+                        {
+                            PrintJobs(searchResults);
+                        }
                     }
                     else
                     {
                         searchResults = JobData.FindByColumnAndValue(columnChoice, searchTerm);
-                        PrintJobs(searchResults);
+                        if (searchResults.Count==0)
+                        {
+                            Console.WriteLine("Not found any data that match with: " + searchTerm);
+                        }
+                        else
+                        {
+                            PrintJobs(searchResults);
+                        }
                     }
                 }
             }
@@ -118,7 +134,16 @@ namespace TechJobsConsole
 
         private static void PrintJobs(List<Dictionary<string, string>> someJobs)
         {
-            Console.WriteLine("printJobs is not implemented yet");
+            foreach(Dictionary<string, string> job in someJobs)
+            {
+                Console.WriteLine("*****");
+                foreach(KeyValuePair<string, string> jobField in job)
+                {
+                    Console.WriteLine(jobField.Key +":" + jobField.Value);
+                }
+                Console.WriteLine("*****");
+            }
+            //Console.WriteLine("printJobs is not implemented yet");
         }
     }
 }
